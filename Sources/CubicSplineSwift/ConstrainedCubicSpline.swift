@@ -1,26 +1,17 @@
 //
-//  File.swift
-//  
+//  ConstrainedCubicSpline.swift
+//  CubicSplineSwift
 //
 //  Created by Pascal Schwinte on 29.10.21.
+//  Copyright 2021 Pascal Schwinte. All rights reserved.
 //
 
-public struct Point {
-  public let x: Double
-  public let y: Double
-
-  public init(x: Double, y: Double) {
-    self.x = x
-    self.y = y
-  }
-}
-
-public struct ConstrainedCubicSpline {
-  var x: [Double] = []
-  var a: [Double] = []
-  var b: [Double] = []
-  var c: [Double] = []
-  var d: [Double] = []
+public struct ConstrainedCubicSpline: CubicSpline {
+  private var x: [Double] = []
+  private var a: [Double] = []
+  private var b: [Double] = []
+  private var c: [Double] = []
+  private var d: [Double] = []
 
   public init(points: [Point]) {
     var x = [Double]()
@@ -34,8 +25,7 @@ public struct ConstrainedCubicSpline {
 
   public init (x: [Double], y: [Double]) {
     assert(x.count == y.count, "X and Y array's need to be of equal length")
-    print(x)
-    print(y)
+    
     self.x = x
     let n = x.count - 1
     var dx = [Double](repeating: 0.0, count: n)
@@ -73,7 +63,7 @@ public struct ConstrainedCubicSpline {
       a[i] = y[i - 1] - b[i] * x[i - 1] - c[i] * exp(x[i - 1], 2) - d[i] * exp(x[i - 1], 3)
     }
   }
-
+  
   /// Creates a number of values that are all conforming to the calculated spline.
   ///
   /// If 1001 is given, there will be y and x value for x=0.000,0.001 ... 0.999,1.000.
@@ -91,16 +81,6 @@ public struct ConstrainedCubicSpline {
       }
       let y = a[i] + b[i] * normalized + c[i] * exp(normalized, 2) + d[i] * exp(normalized, 3)
       result.append(Point(x: normalized, y: y))
-    }
-    return result
-  }
-
-  /// Convenience method to calculate an exponential value without depending on Foundation
-  fileprivate func exp(_ number: Double, _ exp: Int) -> Double {
-    var result: Double = number
-    guard exp > 1 else { return result }
-    for _ in 1..<exp {
-      result *= number
     }
     return result
   }
