@@ -6,7 +6,8 @@
 //  Copyright 2021 Pascal Schwinte. All rights reserved.
 //
 
-public struct Point {
+/// A custom point struct to be independent of macOS.
+public struct Point: Equatable {
   public let x: Double
   public let y: Double
 

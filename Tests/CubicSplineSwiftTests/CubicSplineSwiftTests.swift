@@ -4,21 +4,25 @@ import XCTest
 final class CubicSplineSwiftTests: XCTestCase {
   func testExample() throws {
     let points = [
-      Point(x: 0, y: 30),
-      Point(x: 0.1, y: 130),
-      Point(x: 0.2, y: 150),
-      Point(x: 0.3, y: 150),
-      Point(x: 0.4, y: 170),
-      Point(x: 0.5, y: 200),
-      Point(x: 0.6, y: 270),
-      Point(x: 0.7, y: 370),
-      Point(x: 0.8, y: 170),
-      Point(x: 0.9, y: 190),
-      Point(x: 1.0, y: 100),
+      Point(x: 0, y: 300),
+      Point(x: 1, y: 350),
+      Point(x: 2, y: 370),
+      Point(x: 3, y: 450),
+      Point(x: 4, y: 600),
+      Point(x: 5, y: 480),
+      Point(x: 6, y: 400),
+      Point(x: 7, y: 500),
+      Point(x: 8, y: 400),
+      Point(x: 9, y: 350),
+      Point(x: 10, y: 400),
+      Point(x: 11, y: 600),
+      Point(x: 12, y: 450),
     ]
-    let spline = ConstrainedCubicSpline(points: points)
-    let result = spline.createSpline(values: 1001)
-    result.forEach { print($0.y) }
-    XCTAssertTrue(true)
+    let max =  points.max { $0.y < $1.y }!.y
+    let normalizedPoints = points.map { value in
+      Point(x: value.x / (Double(points.count) - Double(1)), y: value.y / max )
+    }
+    let normalizedSpline = ConstrainedCubicSpline(points: normalizedPoints)
+    let normalizedResult = normalizedSpline.createSpline(values: 1001)
   }
 }

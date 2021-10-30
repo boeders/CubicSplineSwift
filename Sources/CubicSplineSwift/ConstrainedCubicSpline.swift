@@ -6,13 +6,18 @@
 //  Copyright 2021 Pascal Schwinte. All rights reserved.
 //
 
-public struct ConstrainedCubicSpline: CubicSpline {
+public struct ConstrainedCubicSpline: CubicSpline, Equatable {
   private var x: [Double] = []
   private var a: [Double] = []
   private var b: [Double] = []
   private var c: [Double] = []
   private var d: [Double] = []
 
+  /// Creates a new ConstrainedCubicSpline.
+  ///
+  /// - Parameter points: A list of all points the spline should consider.
+  ///
+  /// The list needs to contain at least 3 elements.
   public init(points: [Point]) {
     var x = [Double]()
     var y = [Double]()
@@ -23,9 +28,18 @@ public struct ConstrainedCubicSpline: CubicSpline {
     self.init(x: x, y: y)
   }
 
+  /// Creates a new ConstrainedCubicSpline.
+  ///
+  /// - Parameters:
+  ///  - x: An array with all x coordinates.
+  ///  - y: An array with all y coordinates.
+  ///
+  /// The x and y arrays need to have the same amount of items with each having at least three.
+  ///
   public init (x: [Double], y: [Double]) {
     assert(x.count == y.count, "X and Y array's need to be of equal length")
-    
+    assert(x.count >= 3, "There need to be at least 3 values to enable interpolation")
+
     self.x = x
     let n = x.count - 1
     var dx = [Double](repeating: 0.0, count: n)
