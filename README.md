@@ -1,3 +1,5 @@
+[![Build](https://github.com/boeders/CubicSplineSwift/actions/workflows/swift.yml/badge.svg)](https://github.com/boeders/CubicSplineSwift/actions/workflows/swift.yml)
+
 # CubicSplineSwift
 
 An implementation of an constrained cubic spline that should eliminate over and undershoot when handling charts while maintaining a smooth curve.
